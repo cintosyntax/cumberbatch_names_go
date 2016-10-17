@@ -6,6 +6,7 @@ import (
     "net/http"
     "github.com/gorilla/mux"
     "cumberbatch"
+    "os"
 )
 
 func Generate(w http.ResponseWriter, r *http.Request) {
@@ -16,7 +17,7 @@ func main() {
   router := mux.NewRouter().StrictSlash(true)
   router.HandleFunc("/", Generate)
 
-  port := ":8000"
+  port := os.Getenv("PORT")
   fmt.Println("Starting server on port", port)
-  log.Fatal(http.ListenAndServe(port, router))
+  log.Fatal(http.ListenAndServe(":" + port, router))
 }
